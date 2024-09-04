@@ -16,6 +16,17 @@ const pool = mysql.createPool({
 
 module.exports = pool; // Exporter le pool pour l'utiliser dans d'autres fichiers
 
+// Tester la connexion à la base de données
+async function testConnection() {
+  try {
+    await pool.query('SELECT 1');
+    console.log('Connexion à la base de données réussie!');
+  } catch (error) {
+    console.error('Erreur lors de la connexion à la base de données:', error);
+  }
+}
+
+testConnection(); // Appeler la fonction pour tester la connexion
 
 // declare and fill models : that's where you should register your own managers
 
