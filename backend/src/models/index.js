@@ -1,29 +1,21 @@
 require("dotenv").config();
 
-const mysql = require("mysql2/promise");
+// db.js
+const mysql = require('mysql2/promise');
 
-// create a connection pool to the database
-
-const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
-
+// Créer un pool de connexions pour éviter de créer plusieurs connexions
 const pool = mysql.createPool({
-  host: DB_HOST,
-  port: DB_PORT,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
+  host: 'localhost',     // L'hôte de la base de données (généralement 'localhost')
+  user: 'root',          // Le nom d'utilisateur MySQL
+  password: 'password',  // Le mot de passe MySQL
+  database: 'your_db',   // Le nom de ta base de données
+  waitForConnections: true,
+  connectionLimit: 10,   // Limite le nombre de connexions simultanées
+  queueLimit: 0
 });
 
-// try a connection
+module.exports = pool; // Exporter le pool pour l'utiliser dans d'autres fichiers
 
-pool.getConnection().catch(() => {
-  console.warn(
-    "Warning:",
-    "Failed to get a DB connection.",
-    "Did you create a .env file with valid credentials?",
-    "Routes using models won't work as intended"
-  );
-});
 
 // declare and fill models : that's where you should register your own managers
 
