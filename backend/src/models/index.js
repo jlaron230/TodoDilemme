@@ -21,6 +21,24 @@ module.exports = pool; // Exporter le pool pour l'utiliser dans d'autres fichier
 
 const models = {};
 
+// reminder
+const ReminderManager = require("./ReminderManager");
+
+models.reminder = new ReminderManager();
+models.reminder.setDatabase(pool);
+
+// task_reminder
+const TaskReminderManager = require("./TaskReminderManager");
+
+models.taskReminder = new TaskReminderManager();
+models.taskReminder.setDatabase(pool);
+
+// task_reminder
+const CategoryManager = require("./CategoryManager");
+
+models.category = new CategoryManager();
+models.category.setDatabase(pool);
+
 const ItemManager = require("./ItemManager");
 
 models.item = new ItemManager();
