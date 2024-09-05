@@ -5,38 +5,24 @@ class TaskReminderManager extends AbstractManager {
     super({ table: "task_reminders" });
   }
 
-  findAllReminder(task_reminders) {
+  update(task_reminders) {
     return this.database.query(
-      `SELECT * FROM ${this.table} WHERE date_reminders = ?`,
-      [task_reminders.date_reminder]
+      `UPDATE ${this.table} SET id_task = ?, id_reminders = ? WHERE id_task_reminders = ?`,
+      [task_reminders.id_task, task_reminders.id_reminders, task_reminders.id_task_reminders]
     );
   }
 
-  findReminder(taskReminder) {
+  insert(task_reminders) {
     return this.database.query(
-      `SELECT * FROM ${this.table} WHERE id_reminders = ?`,
-      [taskReminder.date_reminder]
+      `INSERT INTO ${this.table} (id_task, id_reminders) VALUES (?, ?)`,
+      [task_reminders.id_task, task_reminders.id_reminders]
     );
   }
 
-  update(taskReminder) {
-    return this.database.query(
-      `update ${this.table} set date_reminders = ? where id_reminders = ? and heure_reminders = ?`,
-      [taskReminder.date_reminder, taskReminder.id]
-    );
-  }
-
-  insert(taskReminder) {
-    return this.database.query(
-      `insert into ${this.table} (date_reminders) = ? where id = ?`,
-      [taskReminder.date_reminder, taskReminder.id]
-    );
-  }
-
-findTask(taskReminder) {
+delete(task_reminders) {
   return this.database.query(
-    `SELECT * FROM ${this.table} WHERE date_reminders = ?`,
-    [taskReminder.date_reminder]
+    `DELETE FROM ${this.table} WHERE id_task_reminders = ?`,
+    [task_reminders.id_task_reminders]
   );
 }
 }
