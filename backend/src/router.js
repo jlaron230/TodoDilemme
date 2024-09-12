@@ -11,3 +11,5 @@ router.post("/candidacies", candidacyControllers.add);
 router.delete("/candidacies/:id", candidacyControllers.destroy);
 
 module.exports = router;
+
+

@@ -25,6 +25,8 @@ pool.getConnection().catch(() => {
   );
 });
 
+testConnection(); // Appeler la fonction pour tester la connexion
+
 // declare and fill models : that's where you should register your own managers
 
 const models = {};

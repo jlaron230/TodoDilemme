@@ -1,25 +1,21 @@
-class AbstractManager {
-  constructor({ table }) {
-    this.table = table;
-  }
+class AbstractManager{
 
-  find(id) {
-    return this.database.query(`select * from  ${this.table} where id = ?`, [
-      id,
-    ]);
+  constructor({table}){
+    this.table =table;
   }
-
-  findAll() {
-    return this.database.query(`select * from  ${this.table}`);
+  find(id){
+    return this.database.query(`SELECT * FROM ${this.table} WHERE id = ? `,[id]);
   }
-
-  delete(id) {
-    return this.database.query(`delete from ${this.table} where id = ?`, [id]);
+  findAll(){
+    return this.database.query(`SELECT * FROM ${this.table}`);
   }
-
-  setDatabase(database) {
-    this.database = database;
+  delete(id){
+    return this.database.query(`DELETE  FROM ${this.table} WHERE id = ?`,[id]);
+  }
+  setDatabase(database){
+    this.database =database;
   }
 }
 
 module.exports = AbstractManager;
+
