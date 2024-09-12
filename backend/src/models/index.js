@@ -25,7 +25,6 @@ pool.getConnection().catch(() => {
   );
 });
 
-testConnection(); // Appeler la fonction pour tester la connexion
 
 // declare and fill models : that's where you should register your own managers
 
@@ -77,12 +76,6 @@ const ProjectManager = require("./ProjectManager");
 
 models.project = new ProjectManager();
 models.project.setDatabase(pool);
-
-// UserRole
-const UserRoleManager = require("./UserRoleManager");
-
-models.userRole = new UserRoleManager();
-models.userRole.setDatabase(pool);
 
 // UserSkill
 const UserSkillManager = require("./UserSkillManager");
