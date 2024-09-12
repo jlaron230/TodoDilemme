@@ -5,13 +5,11 @@ const mysql = require('mysql2/promise');
 
 // Créer un pool de connexions pour éviter de créer plusieurs connexions
 const pool = mysql.createPool({
-  host: 'localhost',     // L'hôte de la base de données (généralement 'localhost')
-  user: 'root',          // Le nom d'utilisateur MySQL
-  password: 'password',  // Le mot de passe MySQL
-  database: 'your_db',   // Le nom de ta base de données
-  waitForConnections: true,
-  connectionLimit: 10,   // Limite le nombre de connexions simultanées
-  queueLimit: 0
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
 });
 
 module.exports = pool; // Exporter le pool pour l'utiliser dans d'autres fichiers
