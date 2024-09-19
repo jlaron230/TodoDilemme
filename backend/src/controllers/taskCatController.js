@@ -38,10 +38,6 @@ exports.deleteTaskCat = (req, res) => {  // Correction de (res, res) -> (req, re
     .catch((error) => res.status(500).send("Une erreur est survenue lors de la suppression."));
 };
 
-// Associer les routes aux contrôleurs
-router.get("/task-cat", exports.getAllTaskCat);
-router.post("/task-cat", exports.createTaskCat);
-router.put("/task-cat/:id", exports.updateTaskCat);
-router.delete("/task-cat/:id", exports.deleteTaskCat);
+
 
 module.exports = router;
