@@ -5,40 +5,45 @@ class CategoryManager extends AbstractManager {
     super({ table: "category" });
   }
 
-  findAllReminder(category) {
-    return this.database.query(
-      `SELECT * FROM ${this.table} WHERE date_reminders = ?`,
-      [category.date_reminder]
-    );
+  findAllCategory() {
+    return this.findAll();
   }
 
-  findReminder(category) {
+  findCategory(category) {
     return this.database.query(
-      `SELECT * FROM ${this.table} WHERE id_reminders = ?`,
-      [category.date_reminder]
+      `SELECT * FROM ${this.table} WHERE id_category = ? AND name = ?`,
+      [category.name, category.id_category]
     );
   }
 
   update(category) {
     return this.database.query(
-      `update ${this.table} set date_reminders = ? where id_reminders = ? and heure_reminders = ?`,
-      [category.date_reminder, category.id]
+      `update ${this.table} SET name = ? WHERE id_category = ?`,
+      [category.name ,category.id_category]
     );
   }
 
   insert(category) {
     return this.database.query(
-      `insert into ${this.table} (date_reminders) = ? where id = ?`,
-      [category.date_reminder, category.id]
+      `insert into ${this.table} (name) VALUES (?)`,
+      [category.name]
     );
   }
 
-findTask(category) {
-  return this.database.query(
-    `SELECT * FROM ${this.table} WHERE date_reminders = ?`,
-    [category.date_reminder]
-  );
-}
+  delete(category) {
+    return this.database.query(
+      `DELETE FROME ${this.table} WHERE id_category = ?`,
+      [category.id_category]
+    );
+  }
+
+  findCategoryByUsers(userId) {
+    return this.database.query(
+      `SELECT c.* FROM category c JOIN user u on c.id_user = u.id_user
+      WHERE u.id_user = ?`
+      [userId]
+    )
+  }
 }
 
 module.exports = CategoryManager;

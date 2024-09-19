@@ -5,11 +5,8 @@ class ReminderManager extends AbstractManager {
     super({ table: "reminders" });
   }
 
-  findAllReminder(reminders) {
-    return this.database.query(
-      `SELECT * FROM ${this.table} WHERE id_reminders = ?`,
-      [reminders]
-    );
+  findAllReminder() {
+    return this.findAll()
   }
 
   findReminder(reminders) {
@@ -47,9 +44,9 @@ class ReminderManager extends AbstractManager {
 
   delete(reminders) {
     return this.database.query(
-      `DELETE FROM ${this.table} WHERE id_reminders = ?`,
+      `DELETE FROM ${this.table} WHERE id_reminders = ?`
       [reminders.id_reminders]
-    );
+    )
   }
 }
 

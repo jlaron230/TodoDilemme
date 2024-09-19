@@ -8,7 +8,11 @@ class TaskReminderManager extends AbstractManager {
   update(task_reminders) {
     return this.database.query(
       `UPDATE ${this.table} SET id_task = ?, id_reminders = ? WHERE id_task_reminders = ?`,
-      [task_reminders.id_task, task_reminders.id_reminders, task_reminders.id_task_reminders]
+      [
+        task_reminders.id_task,
+        task_reminders.id_reminders,
+        task_reminders.id_task_reminders,
+      ]
     );
   }
 
@@ -19,12 +23,12 @@ class TaskReminderManager extends AbstractManager {
     );
   }
 
-delete(task_reminders) {
-  return this.database.query(
-    `DELETE FROM ${this.table} WHERE id_task_reminders = ?`,
-    [task_reminders.id_task_reminders]
-  );
-}
+  delete(task_reminders) {
+    return this.database.query(
+      `DELETE FROM ${this.table} WHERE id_task_reminders = ?`
+      [task_reminders.id_task_reminders]
+    );
+  }
 }
 
 module.exports = TaskReminderManager;
