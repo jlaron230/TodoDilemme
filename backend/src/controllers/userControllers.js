@@ -1,12 +1,12 @@
 const express =  require("express");
-const UserManager = require("../models/UserManager");
+const UserManagerClass = require("../models/UserManager");
 
 const router = express.Router();
-const UserManager = new UserManager();
+const UserManager = new UserManagerClass();
 
 exports.getAllUsers = (req, res) => {
-  // Récupérer tous les utilisateurs
-  UserManager.findAll()
+const user = req.query.user;
+  UserManager.findAll(user)
     .then((result) => {
       res.json(result);  
     })
@@ -17,9 +17,9 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.CreateUser = (req, res) => {
-  const { id_user } = req.body; // Correction de la déstructuration
+  const { id_user,name_user,email_user,mdp_user } = req.body; // Correction de la déstructuration
 
-  UserManager.Insert({ id_user }) // Suppression du point-virgule après Insert
+  UserManager.insert({ id_user,name_user,email_user,mdp_user }) // Suppression du point-virgule après Insert
     .then((result) => {
       res.status(201).json({ id: result.insertId }); // Correction possible du nom de la clé
     })
@@ -30,16 +30,16 @@ exports.CreateUser = (req, res) => {
 };
 
 exports.updateUser = (req,res) => {
-  const {id_user} = req.body;
+  const {name_user,email_user,mdp_user} = req.body;
   const {id} = req.params;
-  UserManager.update({id_user, id_user : id})
+  UserManager.update({id_user : id,name_user,email_user,mdp_user})
   .then(() => res.status(200).json({message: "Mise a jour effectuéeavec succés"}))
   .catch((error) => res.status(500).send("Une erreur est survenus lors de la mise a jour"))
 };
 
 exports.DeleteUser = (req, res) => {
-  const { id } = req.params;
-  
+  const { id } = req.params; // Récupère l'ID de l'utilisateur à partir des paramètres d'URL
+
   UserManager.delete({ id_user: id })
     .then(() => res.status(200).json({ message: "La suppression de l'utilisateur a été effectuée avec succès" }))
     .catch((error) => {
@@ -47,11 +47,6 @@ exports.DeleteUser = (req, res) => {
       res.status(500).send("Une erreur est survenue lors de la suppression");
     });
 };
-
-
-
-
-
 
 
 module.exports = router
