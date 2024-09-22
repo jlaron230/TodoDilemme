@@ -23,17 +23,22 @@ exports.CreateUser = (req, res) => {
     .then((result) => {
       res.status(201).json({ id: result.insertId }); // Correction possible du nom de la clé
     })
-    .catch((error) => {
-      console.error("Erreur lors de la création de l'utilisateur :", error); // Log d'erreur
-      res.status(500).send("Une erreur est survenue.");
-    });
+   exports.getAllTask = (req, res) => {
+    taskManager.findAll()
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error("erreur lors de la recuperation de données:", error);
+            res.status(500).send("Erreur est survenue lors de la recuperation de données");
+        });
 };
 
 exports.updateUser = (req,res) => {
   const {id_user} = req.body;
   const {id} = req.params;
   UserManager.update({id_user, id_user : id})
-  .then(() => res.status(200).json({message: "Mise a jour effectuéeavec succés"}))
+  .then(() => res.status(200).json({message: "Mise a jour effectuée avec succés"}))
   .catch((error) => res.status(500).send("Une erreur est survenus lors de la mise a jour"))
 };
 
@@ -47,11 +52,5 @@ exports.DeleteUser = (req, res) => {
       res.status(500).send("Une erreur est survenue lors de la suppression");
     });
 };
-
-
-
-
-
-
 
 module.exports = router

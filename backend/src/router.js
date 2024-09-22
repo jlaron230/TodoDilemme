@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router(); // Create an instance of Express router
 
 const candidacyControllers = require("./controllers/candidacyControllers");
+const { deleteTask } = require("./controllers/TaskController");
 
 router.get("/candidacies", candidacyControllers.browse);
 router.get("/candidacies/:id", candidacyControllers.read);
@@ -22,6 +23,10 @@ router.post("/user", exports.CreateUser);
 router.put("/user/:id", exports.updateUser);
 router.delete("/user/:id", exports.DeleteUser);
 
+router.get("/task",exports.getAllTask);
+router.post("/task",exports.createTask);
+router.put("task/:id",exports.updateTask);
+router.delete("task/:id",exports.deleteTask);
 
 module.exports = router;
 
