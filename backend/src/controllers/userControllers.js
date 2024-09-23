@@ -1,8 +1,10 @@
+// controllers/userController.js
 const UserManagerClass = require("../models/UserManager");
 const UserManager = new UserManagerClass();
 
-exports.getAllUsers = (req, res) => {
-const user = req.query.user;
+// Récupérer tous les utilisateurs
+const getAllUsers = (req, res) => {
+  const user = req.query.user;
   UserManager.findAll(user)
     .then((result) => {
       res.json(result);  
@@ -13,10 +15,11 @@ const user = req.query.user;
     });
 };
 
-exports.CreateUser = (req, res) => {
-  const { id_user,name_user,email_user,mdp_user } = req.body; // Correction de la déstructuration
+// Créer un nouvel utilisateur
+const createUser = (req, res) => {
+  const { id_user, name_user, email_user, mdp_user } = req.body; // Correction de la déstructuration
 
-  UserManager.insert({ id_user,name_user,email_user,mdp_user }) // Suppression du point-virgule après Insert
+  UserManager.insert({ id_user, name_user, email_user, mdp_user }) // Suppression du point-virgule après insert
     .then((result) => {
       res.status(201).json({ id: result.insertId }); // Correction possible du nom de la clé
     })
@@ -26,15 +29,20 @@ exports.CreateUser = (req, res) => {
     });
 };
 
-exports.updateUser = (req,res) => {
-  const {name_user,email_user,mdp_user} = req.body;
-  const {id} = req.params;
-  UserManager.update({id_user : id,name_user,email_user,mdp_user})
-  .then(() => res.status(200).json({message: "Mise a jour effectuéeavec succés"}))
-  .catch((error) => res.status(500).send("Une erreur est survenus lors de la mise a jour"))
+// Mettre à jour un utilisateur
+const updateUser = (req, res) => {
+  const { name_user, email_user, mdp_user } = req.body;
+  const { id } = req.params;
+  UserManager.update({ id_user: id, name_user, email_user, mdp_user })
+    .then(() => res.status(200).json({ message: "Mise à jour effectuée avec succès" }))
+    .catch((error) => {
+      console.error("Erreur lors de la mise à jour :", error);
+      res.status(500).send("Une erreur est survenue lors de la mise à jour");
+    });
 };
 
-exports.DeleteUser = (req, res) => {
+// Supprimer un utilisateur
+const deleteUser = (req, res) => {
   const { id } = req.params; // Récupère l'ID de l'utilisateur à partir des paramètres d'URL
 
   UserManager.delete({ id_user: id })
@@ -45,10 +53,10 @@ exports.DeleteUser = (req, res) => {
     });
 };
 
-
+// Export des fonctions
 module.exports = {
   getAllUsers,
-  CreateUser,
-  DeleteUser,
+  createUser,
   updateUser,
+  deleteUser,
 };
