@@ -49,4 +49,9 @@ exports.DeleteUser = (req, res) => {
 };
 
 
-module.exports = router
+module.exports = {
+  getAllUsers,
+  CreateUser,
+  DeleteUser,
+  updateUser,
+};
