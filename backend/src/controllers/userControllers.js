@@ -1,7 +1,4 @@
-const express =  require("express");
 const UserManagerClass = require("../models/UserManager");
-
-const router = express.Router();
 const UserManager = new UserManagerClass();
 
 exports.getAllUsers = (req, res) => {
