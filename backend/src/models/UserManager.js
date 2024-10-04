@@ -19,6 +19,6 @@ delete(user){
     [user.id_user]
   )};
 
-}
+} 
 
-module.exports = UserManager;
+module.exports =  UserManager;
