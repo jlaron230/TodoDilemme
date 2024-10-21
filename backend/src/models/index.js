@@ -42,64 +42,29 @@ const TaskReminderManager = require("./TaskReminderManager");
 models.taskReminder = new TaskReminderManager();
 models.taskReminder.setDatabase(pool);
 
-// task_reminder
+// Category
 const CategoryManager = require("./CategoryManager");
 
 models.category = new CategoryManager();
 models.category.setDatabase(pool);
 
-const ItemManager = require("./ItemManager");
+// Task
+const TaskManager = require("./TaskManager");
 
-models.item = new ItemManager();
-models.item.setDatabase(pool);
+models.task = new TaskManager();
+models.task.setDatabase(pool);
+
+// TaskCat
+const TaskCatManager = require("./TaskCatManager");
+
+models.task_cat = new TaskCatManager();
+models.task_cat.setDatabase(pool);
 
 // user
 const UserManager = require("./UserManager");
 
 models.user = new UserManager();
 models.user.setDatabase(pool);
-
-// Skill
-const SkillManager = require("./SkillManager");
-
-models.skill = new SkillManager();
-models.skill.setDatabase(pool);
-
-// Candidacy
-const CandidacyManager = require("./CandidacyManager");
-
-models.candidacy = new CandidacyManager();
-models.candidacy.setDatabase(pool);
-
-// Projects
-const ProjectManager = require("./ProjectManager");
-
-models.project = new ProjectManager();
-models.project.setDatabase(pool);
-
-// UserSkill
-const UserSkillManager = require("./UserSkillManager");
-
-models.userSkill = new UserSkillManager();
-models.userSkill.setDatabase(pool);
-
-// Job
-const JobManager = require("./JobManager");
-
-models.job = new JobManager();
-models.job.setDatabase(pool);
-
-// Region
-const RegionManager = require("./RegionManager");
-
-models.region = new RegionManager();
-models.region.setDatabase(pool);
-
-// Project Skill
-const ProjectSkillManager = require("./ProjectSkillManager");
-
-models.projectSkill = new ProjectSkillManager();
-models.projectSkill.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

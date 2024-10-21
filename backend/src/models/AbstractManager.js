@@ -6,6 +6,10 @@ class AbstractManager{
   find(id){
     return this.database.query(`SELECT * FROM ${this.table} WHERE id = ? `,[id]);
   }
+  findBy(column, value){
+    const SQL = `SELECT * FROM ${this.table} WHERE ${column} = ?`;
+    return this.database.query(SQL, [value]);
+  }
   findAll(){
     return this.database.query(`SELECT * FROM ${this.table}`);
   }

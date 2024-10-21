@@ -1,91 +1,51 @@
 const models = require("../models");
+const TaskReminderManager = require("../models/TaskReminderManager");
 
-const browse = (req, res) => {
-  models.projectSkill
-    .findAll()
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-const read = (req, res) => {
-  models.projectSkill
-    .find(req.params.id)
-    .then(([rows]) => {
-      if (rows[0] == null) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows[0]);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-const edit = (req, res) => {
-  const projectSkill = req.body;
-
+// Met à jour un rappel de tâche
+const updateTaskReminder = async (req, res) => {
   // TODO validations (length, format...)
+  const taskReminder = { ...req.body, id_task_reminders: parseInt(req.params.id, 10) }; // Récupère les données et l'ID
 
-  projectSkill.id = parseInt(req.params.id, 10);
-
-  models.projectSkill
-    .update(projectSkill)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+  try {
+    await models.taskReminder.update(taskReminder); // Appel au modèle pour mise à jour
+    res.sendStatus(200); // Envoie un statut 200 si succès
+  } catch (err) {
+    console.error(err); // Affiche l'erreur dans la console
+    res.status(500).send("erreur lors de la mise à jour de la tache/rappel"); // Envoie un message d'erreur
+  }
 };
 
-const add = (req, res) => {
-  const projectSkill = req.body;
+// Ajoute un nouveau rappel de tâche
+const add = async (req, res) => {
+  const taskReminder = req.body; // Récupère les données du rappel
 
-  // TODO validations (length, format...)
-
-  models.projectSkill
-    .insert(projectSkill)
-    .then(([result]) => {
-      res.location(`/projectSkills/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+  try {
+    const [result] = await models.taskReminder.insert(taskReminder); // Appel au modèle pour insertion
+    res.location(`/taskReminders/${result.insertId}`).sendStatus(201); // Envoie un statut 201 avec l'URL
+  } catch (err) {
+    console.error(err); // Affiche l'erreur dans la console
+    res.status(500).send("erreur lors de l'ajout de la tache/rappel"); // Envoie un message d'erreur
+  }
 };
 
-const destroy = (req, res) => {
-  models.projectSkill
-    .delete(req.params.id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+// Supprime un rappel de tâche
+const destroy = async (req, res) => {
+  const taskReminder = req.params.id; // Récupère l'ID du rappel
+  try {
+    const [result] = await models.taskReminder.delete(taskReminder); // Appel au modèle pour suppression
+    if (result.affectedRows === 0) {
+      res.sendStatus(404); // Envoie un statut 404 si non trouvé
+    } else {
+      res.sendStatus(204); // Envoie un statut 204 si suppression réussie
+    }
+  } catch (err) {
+    console.error(err); // Affiche l'erreur dans la console
+    res.status(500).send("erreur lors de la suppression de la tache/rappel"); // Envoie un message d'erreur
+  }
 };
 
 module.exports = {
-  browse,
-  read,
-  edit,
+  updateTaskReminder,
   add,
   destroy,
 };

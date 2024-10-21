@@ -11,6 +11,13 @@ router.post("/candidacies", candidacyControllers.add);
 router.delete("/candidacies/:id", candidacyControllers.destroy);
 
 
+const categoryControllers = require("./controllers/categoryControllers");
+
+router.get("/categoryControllers", categoryControllers.findAllCategory);
+router.get("/categoryControllers/:id", categoryControllers.findCategoryByID);
+router.put("/categoryControllers/:id", categoryControllers.edit);
+router.post("/categoryControllers", categoryControllers.add);
+router.delete("/categoryControllers/:id", categoryControllers.destroy);
 
 module.exports = router;
 

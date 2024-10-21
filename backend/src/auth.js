@@ -1,5 +1,6 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
+const models = require("./models");
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -47,26 +48,28 @@ const verifyPassword = (req, res) => {
     });
 };
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   try {
-    const authorizationHeader = req.get("Authorization");
+    const autorisationHeader = "Authorization";
 
-    if (authorizationHeader == null) {
-      throw new Error("Authorization header is missing");
+    if (autorisationHeader === null) {
+      throw new Error("pas de token trouvée");
     }
 
-    const [type, token] = authorizationHeader.split(" ");
-
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not the 'Bearer' type");
+    const [type, token] = autorisationHeader.split("");
+    if (!type === "bearer") {
+      throw new Error("mauvais type de token");
     }
 
-    req.payload = jwt.verify(token, process.env.JWT_SECRET);
+    jwt.verify(token, process.env.JWT_SECRET);
+    req.payload = payload;
+    console.log("token");
 
     next();
+
   } catch (err) {
     console.error(err);
-    res.sendStatus(401);
+    res.sendStatus(404);
   }
 };
 
